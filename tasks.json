@@ -1,37 +1,47 @@
 {
     "version": "2.0.0",
     "tasks": [
-        {
-            "label": "Build (NASM)",
-            "type": "shell",
-            "group": {
-                "kind": "build"
-            },
-            "command": "nasm",
-            "args": [
-                "-f", "elf64",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.o"
-            ],
-            "problemMatcher": "$gcc"
+      {
+        "label": "Build (NASM)",
+        "type": "shell",
+        "group": {
+          "kind": "build"
         },
-        {
-            "label": "Run (ld)",
-            "type": "shell",
-            "group": {
-                "kind": "build"
-            },
-            "command": "ld",
-            "args": [
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
-                "${fileDirname}/${fileBasenameNoExtension}.o",
-                "-T",
-                "x86_64",
-                "-melf_i386"
-            ],
-            "problemMatcher": "$gcc"
-        }
+        "command": "nasm",
+        "args": [
+          "-f",
+          "elf64",
+          "${workspaceFolder}/build/${file}",  // Adjust path if needed
+          "-o",
+          "${workspaceFolder}/build/${fileBasenameNoExtension}.o"
+        ],
+        "problemMatcher": "$gcc"
+      },
+      {
+        "label": "Link (ld)",
+        "type": "shell",
+        "group": {
+          "kind": "build"
+        },
+        "command": "ld",
+        "args": [
+            "-o",
+            "${workspaceFolder}/build/${fileBasenameNoExtension}",
+          "${workspaceFolder}/build/${fileBasenameNoExtension}.o",
+          "-T",
+          "x86_64",
+          "-melf_i386"
+        ],
+        "problemMatcher": "$gcc"
+      },
+      {
+        "label": "Run (Terminal)",
+        "type": "shell",
+        "group": {
+          "kind": "build"
+        },
+        "command": "${workspaceFolder}/build/${fileBasenameNoExtension}",
+        "problemMatcher": "$gcc"
+      }
     ]
-}
+  }
